@@ -1,6 +1,7 @@
 {
   "name": "sistema-gerenciamento-tenis",
   "version": "1.0.0",
+  "main": "index.js",
   "description": "Mini sistema completo para catálogo e gerenciamento de tênis com Node.js, MongoDB, Express e Frontend Vanilla",
   "scripts": {
     "start": "node backend/src/app.js",

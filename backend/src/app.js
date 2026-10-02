@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs');
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 const express = require('express');
 const cors = require('cors');
@@ -27,8 +28,11 @@ app.get('/api/health', (req, res) => {
 // Rotas de Tênis
 app.use('/api/tenis', tenisRoutes);
 
-// Servir arquivos estáticos do frontend (para desenvolvimento local direto)
+// Servir arquivos estáticos do frontend (public e frontend)
+const publicPath = path.resolve(__dirname, '../../public');
 const frontendPath = path.resolve(__dirname, '../../frontend');
+
+app.use(express.static(publicPath));
 app.use(express.static(frontendPath));
 
 // Rota 404 para endpoints de API não encontrados
@@ -41,7 +45,10 @@ app.use('/api', (req, res) => {
 
 // Fallback SPA para carregar frontend caso a rota não seja da API
 app.use((req, res) => {
-  res.sendFile(path.join(frontendPath, 'index.html'));
+  const file = fs.existsSync(path.join(publicPath, 'index.html'))
+    ? path.join(publicPath, 'index.html')
+    : path.join(frontendPath, 'index.html');
+  res.sendFile(file);
 });
 
 // Middleware centralizado de tratamento de erros
