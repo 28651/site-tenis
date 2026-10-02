@@ -28,10 +28,12 @@ app.get('/api/health', (req, res) => {
 // Rotas de Tênis
 app.use('/api/tenis', tenisRoutes);
 
-// Servir arquivos estáticos do frontend (public e frontend)
+// Servir arquivos estáticos do frontend (root, public e frontend)
+const rootPath = path.resolve(__dirname, '../../');
 const publicPath = path.resolve(__dirname, '../../public');
 const frontendPath = path.resolve(__dirname, '../../frontend');
 
+app.use(express.static(rootPath));
 app.use(express.static(publicPath));
 app.use(express.static(frontendPath));
 
@@ -45,9 +47,12 @@ app.use('/api', (req, res) => {
 
 // Fallback SPA para carregar frontend caso a rota não seja da API
 app.use((req, res) => {
-  const file = fs.existsSync(path.join(publicPath, 'index.html'))
-    ? path.join(publicPath, 'index.html')
-    : path.join(frontendPath, 'index.html');
+  let file = path.join(rootPath, 'index.html');
+  if (!fs.existsSync(file)) {
+    file = fs.existsSync(path.join(publicPath, 'index.html'))
+      ? path.join(publicPath, 'index.html')
+      : path.join(frontendPath, 'index.html');
+  }
   res.sendFile(file);
 });
 
