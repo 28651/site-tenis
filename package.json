@@ -1,0 +1,26 @@
+{
+  "name": "sistema-gerenciamento-tenis",
+  "version": "1.0.0",
+  "description": "Mini sistema completo para catálogo e gerenciamento de tênis com Node.js, MongoDB, Express e Frontend Vanilla",
+  "scripts": {
+    "start": "node backend/src/app.js",
+    "dev": "npm --prefix backend run dev",
+    "test": "npm --prefix backend test"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.12.1"
+  },
+  "keywords": [
+    "tenis",
+    "sneakers",
+    "crud",
+    "express",
+    "mongodb",
+    "vercel"
+  ],
+  "author": "",
+  "license": "ISC"
+}
